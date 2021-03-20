@@ -1,5 +1,7 @@
 import math
 import matplotlib.pyplot as plt
+
+# Asks the user for a boolean, and will block until a valid boolean is entered.
 def inputbool(name):
     while True:
         value = input(name+'? (Y/N): ')
@@ -10,9 +12,10 @@ def inputbool(name):
         else:
             print('Enter "Y" or "N" pls')
 
+# Asks the user for a float, and will block until a valid float is entered.
 def inputfloat(name):
     while True:
-        value = input('Enter '+name+': ')
+        value = input('Enter ' + name + ': ')
         try:
             return float(value)
         except:
