@@ -36,9 +36,10 @@ invtpercentage = inputfloat('inventory percentage')
 leadtime = inputfloat('lead time')
 
 isDiscount = inputbool('Enable discounts')
+print()
 #Calculate replenishment level:
 replenishedlevel = (annualdemand/365)*leadtime #lead (lead time) is the number of days waiting for the delivery arrival
-print('replenishment level: ', replenishedlevel)
+print('Replenishment level: ', replenishedlevel)
 
 smallestInvtCost = None
 optimalOrderQuantity = 0
@@ -52,6 +53,7 @@ optimalAHC = 0
 quantitylst = list()
 totalinvtcostlst = list()
 holdingcostlst = list()
+ordercostlst = list()
 for quantity in range(1,annualdemand):
     if isDiscount:
         productcost = getDiscountCost(basecost, quantity)
@@ -87,6 +89,7 @@ for quantity in range(1,annualdemand):
         quantitylst.append(quantity)
         totalinvtcostlst.append(Totalinvtcost)
         holdingcostlst.append(constrainedholdingcost)
+        ordercostlst.append(ordercost)
 #print(collectlst) #tuple list (quantity,Totalinvtcost)
 
 print("Holding cost: ", optimalHoldingCost)
@@ -98,8 +101,9 @@ print('Annual ordering cost: ', optimalAOC)
 print('Annual holding cost: ', optimalAHC)
 print('Optimal total inventory cost: ', smallestInvtCost)
 print('Optimal quantity: ', optimalOrderQuantity)
-plt.plot(quantitylst, totalinvtcostlst, label = 'Allcost')
-plt.plot(quantitylst, holdingcostlst, label = 'HoldingCost')
+plt.plot(quantitylst, totalinvtcostlst, label = 'Ordering + C.Holding Cost')
+plt.plot(quantitylst, holdingcostlst, label = 'Constrained Holding Cost')
+plt.plot(quantitylst, ordercostlst, label = 'Ordering Cost')
 plt.xlabel('Quantity')
 plt.ylabel('Total Cost')
 plt.title('Order Optimisation')
